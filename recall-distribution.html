@@ -23,73 +23,20 @@
         <!-- <script src="state-names.js" type="module"></script> -->
         <script type="module">
             import {states} from './state-names.js';
-
-            const chartService = () => {
-
-                let currentChart;
-
-                async function fetchData(state) {
-                    let url = `https://api.fda.gov/drug/enforcement.json?search=report_date:[20180101+TO+20191231]+AND+state:${state}&limit=100`;
-
-                    let response = await window.fetch(url);
-                    return response.json();
-                }
-
-                function formatData(data) {
-                    let monthData = {};
-
-                    let formatted = data.map(item => {
-                        let month = item.report_date.substring(4,6);
-
-                        if(monthData[month] === undefined) {
-                            monthData[month] = 0;
-                        }
-
-                        monthData[month]++;
-                    })
-
-                    return Object.keys(monthData).map(key => monthData[key]);
-                }
-
-                function drawChart(data, labels) {
-                    currentChart = new Chartist.Bar(
-                        '.chart',
-                        {
-                            labels: labels,
-                            series: data,
-                        },
-                        {
-                            distributeSeries: true,
-                        }
-                    );
-                }
-
-                return {
-                    async render(state) {
-                        try {
-                            let data = await fetchData(state);
-                            let formattedData = formatData(data.results);
-
-                            drawChart(formattedData, this.chartLabels);
-                        } catch (error) {
-                            console.log('ERROR Loading Data!', data);    
-                        }
-                    },
-
-                    get chartLabels() {
-                        return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-                    },
-                }
-            }
+            import {chartService} from './chart-service.js';
 
             const urlParams = new URLSearchParams(window.location.search);
-            const state = urlParams.get('state');
+            const state = urlParams.get('state').toUpperCase();
 
             const chart = chartService();
 
-            chart.render(state)
+            chart.render(state);
 
-            document.querySelector('h1').innerHTML = `DEA Drug recall reports for ${state.toUpperCase()}`;
+            updateHeading(`DEA Drug recall reports for ${states[state]}`);
+
+            function updateHeading(txt) {
+                document.querySelector('h1').innerHTML = txt;
+            }
         </script>
     </body>
 </html>

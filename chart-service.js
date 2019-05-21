@@ -1,31 +1,72 @@
-export function chartService() {
-    return {
-        fetchData(state) {
-            let url = 'https://api.fda.gov/drug/enforcement.json?search=report_date:[20180101+TO+20191231]&count=state';
+export const chartService = () => {
+    let currentChart;
 
+    // TODO: NEED TO MAKE MULTIPLE CALLS TO GET ALL DATA.
+    // TODO: DATA SHOULD BE LAST 12 MONTHS.
+
+    async function fetchData(state) {
+        let url = `https://api.fda.gov/drug/enforcement.json?search=report_date:[20180101+TO+20191231]+AND+state:${state}&limit=100`;
+
+        let response = await window.fetch(url);
+        return response.json();
+    }
+
+    function formatData(data) {
+        let monthData = {};
+
+        data.forEach(item => {
+            let month = item.report_date.substring(4, 6);
+
+            if (monthData[month] === undefined) {
+                monthData[month] = 0;
+            }
+
+            monthData[month]++;
+        });
+
+        return Object.keys(monthData).map(key => monthData[key]);
+    }
+
+    function drawChart(data, labels) {
+        currentChart = new Chartist.Bar(
+            '.chart',
+            {
+                labels: labels,
+                series: data,
+            },
+            {
+                distributeSeries: true,
+            }
+        );
+    }
+
+    return {
+        async render(state) {
             try {
-                let response = await window.fetch(url);
-                let formattedData = await response.json();
-                console.log('----', formattedData.results);
+                let data = await fetchData(state);
+                let formattedData = formatData(data.results);
+
+                drawChart(formattedData, this.chartLabels);
             } catch (error) {
-                console.log('ERROR Loading Data!', data);    
+                console.log('ERROR Loading Data!', data);
             }
         },
 
-        formatData(data) {
-            // maybe aggregate records by month by parsing report_date and grouping by month
-        },
-
-        renderChart() {
-
-        },
-
         get chartLabels() {
-            ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            return [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec',
+            ];
         },
-
-        get chartStates() {
-            ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        }
-    }
-}
+    };
+};
