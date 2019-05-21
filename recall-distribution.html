@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+
+        <title>Simple DEA Drug Recall Stats</title>
+        <meta name="description" content="Simple DEA Drug Recall Stats" />
+
+        <link
+            rel="stylesheet"
+            href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
+        />
+
+        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    </head>
+
+    <body>
+        <h1>HELLO THERE!</h1>
+
+        <div class="chart"></dev>
+
+        <script>
+            new Chartist.Bar(
+                '.chart',
+                {
+                    labels: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+                    series: [20, 60, 120, 200, 180, 20, 10],
+                },
+                {
+                    distributeSeries: true,
+                }
+            );
+        </script>
+    </body>
+</html>
