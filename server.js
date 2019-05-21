@@ -2,9 +2,19 @@ const http = require('http');
 const fs = require('fs');
 
 const server = http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-type': 'text/html' });
+    if (req.url.endsWith('.js')) {
+        res.writeHead(200, { 'Content-type': 'text/javascript' });
+    } else {
+        res.writeHead(200, { 'Content-type': 'text/html' });
+    }
 
-    const page = fs.createReadStream('./recall-distribution.html');
+    let file = '.' + req.url;
+
+    if (req.url.startsWith('/recall-distribution')) {
+        file = './recall-distribution.html';
+    }
+
+    const page = fs.createReadStream(file);
     page.pipe(res);
 });
 

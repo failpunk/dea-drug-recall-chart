@@ -16,11 +16,14 @@
     </head>
 
     <body>
-        <h1>HELLO THERE!</h1>
+        <h1></h1>
 
         <div class="chart"></dev>
 
-        <script>
+        <!-- <script src="state-names.js" type="module"></script> -->
+        <script type="module">
+            import {states} from './state-names.js';
+
             const chartService = () => {
 
                 let currentChart;
@@ -79,9 +82,14 @@
                 }
             }
 
+            const urlParams = new URLSearchParams(window.location.search);
+            const state = urlParams.get('state');
+
             const chart = chartService();
 
-            chart.render('IL')
+            chart.render(state)
+
+            document.querySelector('h1').innerHTML = `DEA Drug recall reports for ${state.toUpperCase()}`;
         </script>
     </body>
 </html>
