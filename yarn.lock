@@ -1436,10 +1436,6 @@ split-string@^3.0.1, split-string@^3.0.2:
   dependencies:
     extend-shallow "^3.0.0"
 
-"squirrelly@https://github.com/nebrelbug/squirrelly.git":
-  version "7.1.1"
-  resolved "https://github.com/nebrelbug/squirrelly.git#77e977b5a58bcf99dbd025d3291a575adb47426e"
-
 static-extend@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
