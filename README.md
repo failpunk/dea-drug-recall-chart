@@ -8,11 +8,13 @@ Download the repo and install deps.
 
 ```
 $ git clone git@github.com:failpunk/dea-drug-recall-chart.git
-$ cd dea-drug-recall-chart
-$ yarn
 ```
 
 Running the srver:
+```
+$ npm start
+```
+or
 ```
 $ yarn start
 ```
