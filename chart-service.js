@@ -27,7 +27,7 @@ export const chartService = () => {
 
     // Fetches a single batch of results from the API (maximum 100)
     async function fetchResultBatch(state, skip, limit = 100) {
-        let url = `https://api.fda.gov/drug/enforcement.json?search=report_date:[20180101+TO+20191231]+AND+state:${state}&limit=${limit}&skip=${skip}`;
+        let url = `https://api.fda.gov/drug/enforcement.json?search=report_date:[20180101+TO+20181231]+AND+state:${state}&limit=${limit}&skip=${skip}`;
 
         let response = await window.fetch(url);
         return response.json();
