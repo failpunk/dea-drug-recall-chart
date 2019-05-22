@@ -12,11 +12,7 @@ $ git clone git@github.com:failpunk/dea-drug-recall-chart.git
 
 Running the srver:
 ```
-$ npm start
-```
-or
-```
-$ yarn start
+$ node server
 ```
 
 ## Rendering Charts

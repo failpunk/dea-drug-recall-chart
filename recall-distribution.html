@@ -7,6 +7,8 @@
         <title>Simple DEA Drug Recall Stats</title>
         <meta name="description" content="Simple DEA Drug Recall Stats" />
 
+        <link rel="stylesheet" href="app.css" />
+
         <link
             rel="stylesheet"
             href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
@@ -16,26 +18,68 @@
     </head>
 
     <body>
-        <h1></h1>
+        <div class="header">
+            <object
+                data="assets/logo_honeybee.svg"
+                type="image/svg+xml"
+            ></object>
+        </div>
 
-        <div class="chart"></dev>
+        <div class="wrap">
+            <div class="content">
+                <!-- Displays heading -->
+                <h1></h1>
 
-        <!-- <script src="state-names.js" type="module"></script> -->
+                <div class="lds-ripple">
+                    <div></div>
+                    <div></div>
+                </div>
+
+                <!-- Chart container -->
+                <div class="chart"></div>
+            </div>
+        </div>
+
         <script type="module">
-            import {states} from './state-names.js';
-            import {chartService} from './chart-service.js';
+            import { states } from './state-names.js';
+            import { chartService } from './chart-service.js';
 
+            // Get state from the url
             const urlParams = new URLSearchParams(window.location.search);
             const state = urlParams.get('state').toUpperCase();
 
-            const chart = chartService();
+            renderPage(state);
 
-            chart.render(state);
+            // Get our chart service and render for the current state.
+            async function renderPage(state) {
+                const chart = chartService();
+                await chart.render(state);
 
-            updateHeading(`DEA Drug recall reports for ${states[state]}`);
+                hideLoadignIndicator();
+                showChart();
 
-            function updateHeading(txt) {
+                setHeading(`DEA Drug recall reports for ${states[state]}`);
+            }
+
+            // Updates our page title
+            function setHeading(txt) {
                 document.querySelector('h1').innerHTML = txt;
+            }
+
+            function hideChart() {
+                document.querySelector('.chart').style.display = 'none';
+            }
+
+            function showChart() {
+                document.querySelector('.chart').style.display = 'block';
+            }
+
+            function hideLoadignIndicator() {
+                document.querySelector('.lds-ripple').style.display = 'none';
+            }
+
+            function showLoadignIndicator() {
+                document.querySelector('.lds-ripple').style.display = 'block';
             }
         </script>
     </body>

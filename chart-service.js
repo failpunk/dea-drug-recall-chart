@@ -47,6 +47,8 @@ export const chartService = () => {
                 let formattedData = formatData(data.results);
 
                 drawChart(formattedData, this.chartLabels);
+
+                return true;
             } catch (error) {
                 console.log('ERROR Loading Data!', data);
             }
