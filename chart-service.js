@@ -51,9 +51,9 @@ export const chartService = () => {
     }
 
     // Instantiates a new chart with our updated dataset.
-    function drawChart(data, labels) {
+    function drawChart(data, labels, selector) {
         currentChart = new Chartist.Bar(
-            '.chart',
+            selector,
             {
                 labels: labels,
                 series: data,
@@ -69,12 +69,12 @@ export const chartService = () => {
      */
     return {
         // Render a chart for a given state code.
-        async render(state) {
+        async render(state, selector) {
             try {
                 apiResults = await fetchData(state);
                 resultSet = formatData(apiResults);
 
-                drawChart(resultSet, this.chartLabels);
+                drawChart(resultSet, this.chartLabels, selector);
 
                 return true;
             } catch (error) {

@@ -55,7 +55,7 @@
             // Get our chart service and render for the current state.
             async function renderPage(state) {
                 const chart = chartService();
-                await chart.render(state);
+                await chart.render(state, '.chart');
 
                 hideLoadignIndicator();
                 showChart();
@@ -66,7 +66,11 @@
             }
 
             function showChartDesc(chart) {
-                document.querySelector('.desc').innerHTML = `Showing the distribution of ${chart.apiResults.length} total reports in ${state} between 01/01/2018 and 12/31/2018.`;
+                document.querySelector(
+                    '.desc'
+                ).innerHTML = `Showing the distribution of ${
+                    chart.apiResults.length
+                } total reports in ${state} between 01/01/2018 and 12/31/2018.`;
             }
 
             // Updates our page title
