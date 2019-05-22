@@ -37,6 +37,8 @@
 
                 <!-- Chart container -->
                 <div class="chart"></div>
+
+                <div class="desc"></div>
             </div>
         </div>
 
@@ -58,7 +60,13 @@
                 hideLoadignIndicator();
                 showChart();
 
+                showChartDesc(chart);
+
                 setHeading(`DEA Drug recall reports for ${states[state]}`);
+            }
+
+            function showChartDesc(chart) {
+                document.querySelector('.desc').innerHTML = `Showing the distribution of ${chart.apiResults.length} total reports in ${state} between 01/01/2018 and 12/31/2018.`;
             }
 
             // Updates our page title
